@@ -9,9 +9,12 @@
 
 int main() {
     int result;
-
+	int pid;
     result = Add(42, 23);
-
-    Halt();
-    /* not reached */
+     PrintString("jBEFORE SLEEP ");
+    pid = Exec("nstr", 0);
+    Sleep(10
+    );
+    PrintString("AFTER SLEEP");
 }
+    

@@ -20,7 +20,12 @@
 //		occur at random, instead of fixed, intervals.
 //----------------------------------------------------------------------
 
+
 Alarm::Alarm(bool doRandom) { timer = new Timer(doRandom, this); }
+
+
+
+
 
 //----------------------------------------------------------------------
 // Alarm::CallBack
@@ -41,10 +46,31 @@ Alarm::Alarm(bool doRandom) { timer = new Timer(doRandom, this); }
 //----------------------------------------------------------------------
 
 void Alarm::CallBack() {
+
+    if (!sleep_queue.empty())
+    {
+        cout<<" sleep queue isnot empty, inside if cond\n";
+        while(sleep_queue.top().first <= cur_time){
+            kernel->scheduler->ReadyToRun(sleep_queue.top().second);
+            sleep_queue.pop();
+            if(sleep_queue.empty())break;
+        }
+    }
+    cur_time += 1;
+
     Interrupt *interrupt = kernel->interrupt;
     MachineStatus status = interrupt->getStatus();
 
     if (status != IdleMode) {
         interrupt->YieldOnReturn();
     }
+}
+
+void Alarm::WaitUntil(int x){
+  
+
+    pair<int,Thread*> p;
+    p.first = x + cur_time;
+    p.second = kernel->currentThread;
+    sleep_queue.push(p);
 }

@@ -10,7 +10,7 @@ char a[256];
 int main() {
     // PrintUCString("String length: (<= 255):\n");
     // ReadString(a, ReadNum());
-    int pid = Exec("nstr");
-    Join(pid);
+    int pid = Exec("nstr",10);
+    // Join(pid);
    while(1){ PrintUCString("hekkidekki \n");}
 }

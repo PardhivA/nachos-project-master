@@ -21,15 +21,17 @@
 #include "utility.h"
 #include "callback.h"
 #include "timer.h"
-
+#include "queue"
+#include "thread.h"
 // The following class defines a software alarm clock.
 class Alarm : public CallBackObj {
    public:
     Alarm(bool doRandomYield);  // Initialize the timer, and callback
                                 // to "toCall" every time slice.
     ~Alarm() { delete timer; }
-
-    void WaitUntil(int x);  // suspend execution until time > now + x
+   priority_queue<pair<int , Thread *>, vector<pair<int , Thread *>>, greater<pair<int , Thread *>>> sleep_queue;
+   int cur_time = 0;
+   void WaitUntil(int x);  // suspend execution until time > now + x
                             // this method is not yet implemented
 
    private:

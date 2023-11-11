@@ -49,6 +49,7 @@
 #define SC_Wait 52
 #define SC_Signal 53
 #define SC_GetPid 54
+#define SC_Sleep 56
 
 #ifndef IN_ASM
 
@@ -98,10 +99,12 @@ typedef int SpaceId;
 /* A unique identifier for a thread within a task */
 typedef int ThreadId;
 
+void Sleep(int x);
+
 /* Run the specified executable, with no args */
 /* This can be implemented as a call to ExecV.
  */
-SpaceId Exec(char *exec_name);
+SpaceId Exec(char *exec_name, int priority);
 
 /* Run the executable, stored in the Nachos file "argv[0]", with
  * parameters stored in argv[1..argc-1] and return the
